@@ -1,4 +1,5 @@
 using GTech.Weather.Forecast.AI.Integration;
+using GTech.Weather.Forecast.AI.Infrastructure;
 using Newtonsoft.Json;
 
 namespace GTech.Weather.Forecast.AI.Test
@@ -16,12 +17,19 @@ namespace GTech.Weather.Forecast.AI.Test
             var result = service.GetCityKeyAsync(cityName).Result;
             Console.WriteLine(result);
         }
-        [TestCase("Mersin")]
+        [TestCase("Manisa")]
         public async Task DailyForecast_GetDailyForecastsAsync_Success(string cityName)
         {
             DailyForecastsService service = new();
             var result = await service.GetDailyForecastsAsync(cityName);
             Console.WriteLine(JsonConvert.SerializeObject(result));
+        }
+        [TestCase("")]
+        public void Bruh(string bruh)
+        {
+            WeatherForecastMongoDB deneme = new WeatherForecastMongoDB();
+            deneme.TestDatabaseConnection();
+            Console.WriteLine(deneme);
         }
     }
 }

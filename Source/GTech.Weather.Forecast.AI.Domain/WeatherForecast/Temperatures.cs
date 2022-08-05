@@ -1,4 +1,7 @@
-﻿namespace GTech.Weather.Forecast.AI.Domain.WeatherForecast
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace GTech.Weather.Forecast.AI.Domain.WeatherForecast
 {
     public class Root
     {

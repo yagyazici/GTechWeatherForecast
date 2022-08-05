@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GTech.Weather.Forecast.AI.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GTech.Weather.Forecast.AI.ApiService", "Source\GTech.Weather.Forecast.AI.ApiService\GTech.Weather.Forecast.AI.ApiService.csproj", "{9A9EF766-0134-456C-B2EC-4D20F2519A0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTech.Weather.Forecast.AI.Test", "Source\GTech.Weather.Forecast.AI.Test\GTech.Weather.Forecast.AI.Test.csproj", "{A1609CC6-86EA-4C3C-A1D6-505316DA5937}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GTech.Weather.Forecast.AI.Test", "Source\GTech.Weather.Forecast.AI.Test\GTech.Weather.Forecast.AI.Test.csproj", "{A1609CC6-86EA-4C3C-A1D6-505316DA5937}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
