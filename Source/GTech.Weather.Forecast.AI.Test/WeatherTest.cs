@@ -1,5 +1,4 @@
 using GTech.Weather.Forecast.AI.Integration;
-using GTech.Weather.Forecast.AI.Infrastructure;
 using Newtonsoft.Json;
 
 namespace GTech.Weather.Forecast.AI.Test
@@ -10,13 +9,14 @@ namespace GTech.Weather.Forecast.AI.Test
         public void Setup()
         {
         }
-        [TestCase ("Istanbul")]
+        [TestCase("Istanbul")]
         public void City_GetCityName_Success(string cityName)
         {
             AccuWeatherService service = new();
             var result = service.GetCityKeyAsync(cityName).Result;
             Console.WriteLine(result);
         }
+
         [TestCase("Manisa")]
         public async Task DailyForecast_GetDailyForecastsAsync_Success(string cityName)
         {
@@ -24,12 +24,13 @@ namespace GTech.Weather.Forecast.AI.Test
             var result = await service.GetDailyForecastsAsync(cityName);
             Console.WriteLine(JsonConvert.SerializeObject(result));
         }
-        [TestCase("")]
-        public void Bruh(string bruh)
+
+        [TestCase ("Antalya")]
+        public async Task InsertDailyForecastCollection_Success(string cityName)
         {
-            WeatherForecastMongoDB deneme = new WeatherForecastMongoDB();
-            deneme.TestDatabaseConnection();
-            Console.WriteLine(deneme);
+            WeatherForecastMongoDBService service = new();
+            await service.InsertDailyForecastCollection(cityName);
+            Console.WriteLine("Done!");
         }
     }
 }

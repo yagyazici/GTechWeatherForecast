@@ -9,14 +9,14 @@ namespace GTech.Weather.Forecast.AI.Integration
         public string BaseUrl = "http://dataservice.accuweather.com/";
         private readonly HttpClient _Client = new();
 
-        public async Task<List<DailyForecast>> GetDailyForecastsAsync(string cityName)
+        public async Task<DailyForecast> GetDailyForecastsAsync(string cityName)
         {
             var service = new AccuWeatherService();
             var result = await service.GetCityKeyAsync(cityName);
             string FullUrl = $"{BaseUrl}forecasts/v1/daily/1day/{result}?apikey={ApiKey}&language=en-us&metric=true";
             string response = await _Client.GetStringAsync(FullUrl);
             Root city = JsonConvert.DeserializeObject<Root>(response);
-            return city.DailyForecasts;
+            return city.DailyForecasts.FirstOrDefault();
         }
     }
 }

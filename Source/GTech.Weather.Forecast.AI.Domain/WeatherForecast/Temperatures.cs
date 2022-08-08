@@ -10,6 +10,7 @@ namespace GTech.Weather.Forecast.AI.Domain.WeatherForecast
     }
     public class DailyForecast
     {
+
         public DateTime? Date { get; set; }
         public int? EpochDate { get; set; }
         public Temperature? Temperature { get; set; }
