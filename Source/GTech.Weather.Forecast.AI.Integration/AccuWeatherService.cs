@@ -4,7 +4,7 @@ namespace GTech.Weather.Forecast.AI.Integration
 {
     public class AccuWeatherService
     {
-        public string ApiKey = "UyeghCuMmB3O6xHc14mp08QBNEsjqbPj";
+        public string ApiKey = GetApiKey.Update();
         public string BaseUrl = "http://dataservice.accuweather.com/";
         private readonly HttpClient _Client = new();
         

@@ -25,11 +25,27 @@ namespace GTech.Weather.Forecast.AI.Test
             Console.WriteLine(JsonConvert.SerializeObject(result));
         }
 
-        [TestCase ("Antalya")]
+        [TestCase("Antalya")]
+        public async Task HourlyForecast_GetHourlyForecastsAsync_Success(string cityName)
+        {
+            HourlyForecastService service = new();
+            var result = await service.GetHourlyForecastsAsync(cityName);
+            Console.WriteLine(JsonConvert.SerializeObject(result));
+        }
+
+        [TestCase("Antalya")]
         public async Task InsertDailyForecastCollection_Success(string cityName)
         {
             WeatherForecastMongoDBService service = new();
             await service.InsertDailyForecastCollection(cityName);
+            Console.WriteLine("Done!");
+
+        }
+        [TestCase ("Antalya")]
+        public async Task InsertHourlyForecastCollection_Success(string cityName)
+        {
+            WeatherForecastMongoDBService service = new();
+            await service.InsertHourlyForecastCollection(cityName);
             Console.WriteLine("Done!");
         }
     }

@@ -12,16 +12,17 @@ namespace GTech.Weather.Forecast.AI.Integration
             var service = new DailyForecastsService();
             var connection = new WeatherForecastMongoDB();
             var collection = connection.WeatherForecastCollection();
-            var dailyForecastBSON = service.GetDailyForecastsAsync(cityName).Result; /*.Result.ToBson()*/
-            foreach (var dailyForecast in dailyForecastBSON)
-            {
-                var bruh = dailyForecast.ToBson();
-                var data = BsonSerializer.Deserialize<DailyForecast>(bruh);
-                await collection.InsertOneAsync(data);
-            }
+            var dailyForecastBSON = service.GetDailyForecastsAsync(cityName).Result;
+            await collection.InsertManyAsync(dailyForecastBSON);
+        }
 
-            //var data = BsonSerializer.Deserialize<DailyForecast>(dailyForecastBSON);
-            //await collection.InsertManyAsync(data);
+        public async Task InsertHourlyForecastCollection(string cityName)
+        {
+            var service = new HourlyForecastService();
+            var connection = new WeatherForecastMongoDB();
+            var collection = connection.HourlyWeatherForecastCollection();
+            var hourlyForecastBSON = service.GetHourlyForecastsAsync(cityName).Result;
+            await collection.InsertManyAsync(hourlyForecastBSON);
         }
     }
 }
