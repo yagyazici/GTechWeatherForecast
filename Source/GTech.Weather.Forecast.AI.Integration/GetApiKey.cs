@@ -4,7 +4,7 @@
     {
         public static string Update()
         {
-            return "rk6IybvvWaaV8l8PyA3MOZRZQ44IyU0i";
+            return "NguvGArz5bAX7G03YPOWASdAQpuz9LhA";
         }
     }
 }

@@ -13,11 +13,9 @@ namespace GTech.Weather.Forecast.AI.Integration
         {
             string FullUrl = $"{BaseUrl}locations/v1/cities/search?apikey={ApiKey}&q={cityName}";
             var response = await _Client.GetStringAsync(FullUrl);
-            //var city = JsonConvert.DeserializeObject<JObject>(response);
-            //city.ToObject<string>()
-            var city = JsonConvert.DeserializeObject<List<JToken>>(response).FirstOrDefault();
-            string key = city["key"].ToString();
-            return key;
+            var city = JsonConvert.DeserializeObject<List<JObject>>(response);
+            dynamic key = city.FirstOrDefault();
+            return key["Key"];
         }
     }
 }
