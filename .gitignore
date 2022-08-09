@@ -54,6 +54,6 @@ speed-measure-plugin*.json
 # editor files
 .vscode/**
 # allow some files
-!.vscode/launch.json
-!.vscode/tasks.json
-!.vscode/restore-terminals.json
+# !.vscode/launch.json
+# !.vscode/tasks.json
+# !.vscode/restore-terminals.json
