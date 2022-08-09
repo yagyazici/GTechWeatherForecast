@@ -9,6 +9,7 @@ namespace GTech.Weather.Forecast.AI.Integration
     {
         public async Task InsertDailyForecastCollection(string cityName)
         {
+
             var service = new DailyForecastsService();
             var connection = new WeatherForecastMongoDB();
             var collection = connection.WeatherForecastCollection();

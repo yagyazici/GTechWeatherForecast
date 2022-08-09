@@ -13,7 +13,7 @@
         public bool HasPrecipitation { get; set; }
         public object? PrecipitationType { get; set; }
         public bool IsDayTime { get; set; }
-        public Temperature? Temperature { get; set; }
+        public DailyTemperature? Temperature { get; set; }
         public string? MobileLink { get; set; }
         public string? Link { get; set; }
     }
@@ -29,7 +29,7 @@
         public string? Unit { get; set; }
         public int UnitType { get; set; }
     }
-    public class Temperature
+    public class DailyTemperature
     {
         public Metric? Metric { get; set; }
         public Imperial? Imperial { get; set; }

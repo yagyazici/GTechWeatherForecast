@@ -1,3 +1,5 @@
+using GTech.Weather.Forecast.AI.Integration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
