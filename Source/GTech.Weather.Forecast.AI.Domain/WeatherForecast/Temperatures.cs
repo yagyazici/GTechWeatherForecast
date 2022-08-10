@@ -10,6 +10,9 @@ namespace GTech.Weather.Forecast.AI.Domain.WeatherForecast
     }
     public class DailyForecast
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)] 
+        public string? Id { get; set; }
         public DateTime? Date { get; set; }
         public int? EpochDate { get; set; }
         public HourlyTemperature? Temperature { get; set; }

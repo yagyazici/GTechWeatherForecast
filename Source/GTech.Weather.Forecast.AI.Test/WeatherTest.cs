@@ -48,5 +48,13 @@ namespace GTech.Weather.Forecast.AI.Test
             await service.InsertHourlyForecastCollection(cityName);
             Console.WriteLine("Done!");
         }
+        
+        [TestCase]
+        public async Task Deneme()
+        {
+            TimeSeriesService service = new();
+            await service.GetMLAsync12();
+            Console.WriteLine("done");
+        }
     }
 }

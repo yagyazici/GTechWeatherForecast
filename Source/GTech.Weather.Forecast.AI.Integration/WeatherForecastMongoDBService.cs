@@ -1,7 +1,4 @@
-﻿using GTech.Weather.Forecast.AI.Domain.WeatherForecast;
-using GTech.Weather.Forecast.AI.Infrastructure;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
+﻿using GTech.Weather.Forecast.AI.Infrastructure;
 
 namespace GTech.Weather.Forecast.AI.Integration
 {
