@@ -15,7 +15,7 @@ namespace GTech.Weather.Forecast.AI.Domain.WeatherForecast
         public string? Id { get; set; }
         public DateTime? Date { get; set; }
         public int? EpochDate { get; set; }
-        public HourlyTemperature? Temperature { get; set; }
+        public DailyTemperature? Temperature { get; set; }
         public Day? Day { get; set; }
         public Night? Night { get; set; }
         public List<string>? Sources { get; set; }
@@ -58,7 +58,7 @@ namespace GTech.Weather.Forecast.AI.Domain.WeatherForecast
         public string? IconPhrase { get; set; }
         public bool? HasPrecipitation { get; set; }
     }
-    public class HourlyTemperature
+    public class DailyTemperature
     {
         public Minimum? Minimum { get; set; }
         public Maximum? Maximum { get; set; }

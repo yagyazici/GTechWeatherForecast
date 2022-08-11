@@ -1,24 +1,65 @@
-using GTech.Weather.Forecast.AI.Infrastructure;
 using GTech.Weather.Forecast.AI.Domain.WeatherForecast;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Microsoft.ML;
-using Newtonsoft.Json;
+using GTech.Weather.Forecast.AI.Infrastructure;
+using GTech.Weather.Forecast.AI.Domain;
+using Microsoft.ML.Transforms.TimeSeries;
+using DnsClient;
+using SharpCompress.Readers;
+using System.Diagnostics;
+using System.Drawing;
+using System.Data;
 
 namespace GTech.Weather.Forecast.AI.Integration
 {
     public class TimeSeriesService
     {
         MLContext context = new();
-        public async Task GetMLAsync12()
+        WeatherForecastMongoDB connection = new();
+        public async Task GetMLAsync()
         {
-            var mongo_client = new MongoClient("mongodb://localhost:7296/?serverSelectionTimeoutMS=5000&connectTimeoutMS=10000&3t.uriVersion=3&3t.connection.name=WeatherForecastMongoDB&3t.alwaysShowAuthDB=true&3t.alwaysShowDBFromUserRole=true");
-            var mongo_database = mongo_client.GetDatabase("WeatherForecastDB");
-            var collection = mongo_database.GetCollection<DailyForecast>("DailyForecast");
-            var documents = collection.Find(FilterDefinition<DailyForecast>.Empty).ToEnumerable();
-            Console.WriteLine(documents.FirstOrDefault().GetType());
-            IDataView data = context.Data.LoadFromEnumerable(documents);
-            Console.WriteLine(data);
+            try
+            {
+                var collection = connection.WeatherForecastCollection();
+                var documents = collection.Find(FilterDefinition<DailyForecast>.Empty).ToEnumerable();
+                
+                var listMlDailyForecast = new List<MLDailyData>();
+
+                foreach (var document in documents)
+                {
+                    listMlDailyForecast.Add(new MLDailyData
+                    {
+                        Value = (float)document.Temperature.Maximum.Value,
+                        Date = (DateTime)document.Date
+                    });
+                }
+
+                var data = context.Data.LoadFromEnumerable(listMlDailyForecast);
+                var inputColumnName = nameof(MLDailyData.Value);
+                var outputColumnName = nameof(MLDailyForecast.Forecast);
+
+                var pipeline = context.Forecasting.ForecastBySsa(
+                    outputColumnName,
+                    inputColumnName,
+                    windowSize: 2,
+                    seriesLength: 4,
+                    trainSize: listMlDailyForecast.Count,
+                    horizon: 10
+                    );
+
+                var model = pipeline.Fit(data);
+                var forecastingEngine = model.CreateTimeSeriesEngine<MLDailyData, MLDailyForecast>(context);
+                var forecasts = forecastingEngine.Predict();
+
+                foreach(var forecast in forecasts.Forecast)
+                {
+                    Console.WriteLine(forecast);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
