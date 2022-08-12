@@ -9,6 +9,7 @@ namespace GTech.Weather.Forecast.AI.Test
         public void Setup()
         {
         }
+
         [TestCase("Istanbul")]
         public void City_GetCityName_Success(string cityName)
         {
@@ -26,14 +27,6 @@ namespace GTech.Weather.Forecast.AI.Test
         }
 
         [TestCase("Antalya")]
-        public async Task HourlyForecast_GetHourlyForecastsAsync_Success(string cityName)
-        {
-            HourlyForecastService service = new();
-            var result = await service.GetHourlyForecastsAsync(cityName);
-            Console.WriteLine(JsonConvert.SerializeObject(result));
-        }
-
-        [TestCase("Antalya")]
         public async Task InsertDailyForecastCollection_Success(string cityName)
         {
             WeatherForecastMongoDBService service = new();
@@ -41,19 +34,21 @@ namespace GTech.Weather.Forecast.AI.Test
             Console.WriteLine("Done!");
 
         }
-        [TestCase ("Antalya")]
-        public async Task InsertHourlyForecastCollection_Success(string cityName)
+
+        [TestCase]
+        public async Task RemoveDailyForecastCollection_Success()
         {
             WeatherForecastMongoDBService service = new();
-            await service.InsertHourlyForecastCollection(cityName);
+            await service.ClearDailyForecastCollection();
             Console.WriteLine("Done!");
+
         }
-        
-        [TestCase]
-        public async Task Deneme()
+
+        [TestCase("kalsin")]
+        public async Task Deneme(string cityName)
         {
             TimeSeriesService service = new();
-            service.GetMLAsync();
+            service.GetMLAsync(cityName);
         }
     }
 }

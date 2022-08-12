@@ -16,11 +16,16 @@ namespace GTech.Weather.Forecast.AI.ApiService.Controllers
         }
 
         [HttpGet(Name = "GetDailyPrediction")]
-        public IEnumerable<PredictedDailyTemperature> Get()
+        public async Task<IEnumerable<PredictedDailyTemperature>> Get(string cityName, int horizon)
         {
+            WeatherForecastMongoDBService mongoService = new();
+            await mongoService.ClearDailyForecastCollection();
+            await mongoService.InsertDailyForecastCollection(cityName);
+
             List<PredictedDailyTemperature> requests = new();
             TimeSeriesService service = new TimeSeriesService();
-            requests.Add(service.GetMLAsync());
+            
+            requests.Add(service.GetMLAsync(cityName, horizon));
             return requests;
         }
     }
