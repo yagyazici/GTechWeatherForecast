@@ -53,8 +53,7 @@ namespace GTech.Weather.Forecast.AI.Test
         public async Task Deneme()
         {
             TimeSeriesService service = new();
-            await service.GetMLAsync();
-            Console.WriteLine("done");
+            service.GetMLAsync();
         }
     }
 }

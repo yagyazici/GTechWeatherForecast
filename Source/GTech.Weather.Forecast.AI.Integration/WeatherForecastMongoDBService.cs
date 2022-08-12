@@ -13,7 +13,6 @@ namespace GTech.Weather.Forecast.AI.Integration
             var dailyForecastBSON = service.GetDailyForecastsAsync(cityName).Result;
             await collection.InsertManyAsync(dailyForecastBSON);
         }
-
         public async Task InsertHourlyForecastCollection(string cityName)
         {
             var service = new HourlyForecastService();

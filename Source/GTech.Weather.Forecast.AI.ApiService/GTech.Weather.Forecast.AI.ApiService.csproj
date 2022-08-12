@@ -13,9 +13,5 @@
   <ItemGroup>
     <ProjectReference Include="..\GTech.Weather.Forecast.AI.Applications\GTech.Weather.Forecast.AI.Applications.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
     
 </Project>
