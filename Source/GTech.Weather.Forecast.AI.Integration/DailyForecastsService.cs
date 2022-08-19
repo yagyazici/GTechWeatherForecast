@@ -6,17 +6,15 @@ namespace GTech.Weather.Forecast.AI.Integration
     public class DailyForecastsService
     {
         public string ApiKey = GetApiKey.Update();
-        public string BaseUrl = "http://dataservice.accuweather.com/";
+        public string BaseUrl = "https://api.openweathermap.org/data/2.5/forecast?";
         private readonly HttpClient _Client = new();
 
-        public async Task<List<DailyForecast>> GetDailyForecastsAsync(string cityName)
+        public async Task<Root> GetDailyForecastsAsync(string cityName)
         {
-            var service = new AccuWeatherService();
-            var result = await service.GetCityKeyAsync(cityName);
-            string FullUrl = $"{BaseUrl}forecasts/v1/daily/5day/{result}?apikey={ApiKey}&language=en-us&metric=true";
+            string FullUrl = $"{BaseUrl}q={cityName}&appid={ApiKey}&lang=tr&units=metric";
             string response = await _Client.GetStringAsync(FullUrl);
-            Root city = JsonConvert.DeserializeObject<Root>(response);
-            return city.DailyForecasts;
+            Root root = JsonConvert.DeserializeObject<Root>(response);
+            return root;
         }
     }
 }

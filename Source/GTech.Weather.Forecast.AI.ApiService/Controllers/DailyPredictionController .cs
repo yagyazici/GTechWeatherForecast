@@ -9,24 +9,21 @@ namespace GTech.Weather.Forecast.AI.ApiService.Controllers
     public class DailyPredictionController : Controller
     {
         private readonly ILogger<DailyPredictionController> _logger;
-
         public DailyPredictionController(ILogger<DailyPredictionController> logger)
         {
             _logger = logger;
         }
 
         [HttpGet(Name = "GetDailyPrediction")]
-        public async Task<IEnumerable<PredictedDailyTemperature>> Get(string cityName, int horizon)
+        public async Task<List<PredictedDailyTemperature>> Get()
         {
             WeatherForecastMongoDBService mongoService = new();
             await mongoService.ClearDailyForecastCollection();
-            await mongoService.InsertDailyForecastCollection(cityName);
+            await mongoService.InsertDailyForecastCollection();
 
-            List<PredictedDailyTemperature> requests = new();
             TimeSeriesService service = new TimeSeriesService();
-            
-            requests.Add(service.GetMLAsync(cityName, horizon));
-            return requests;
+
+            return await service.GetMLAsync();
         }
     }
 }

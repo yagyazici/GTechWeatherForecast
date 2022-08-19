@@ -1,5 +1,5 @@
 ﻿using GTech.Weather.Forecast.AI.Infrastructure;
-
+using GTech.Weather.Forecast.AI.Domain.WeatherForecast;
 namespace GTech.Weather.Forecast.AI.Integration
 {
     public class WeatherForecastMongoDBService
@@ -10,14 +10,26 @@ namespace GTech.Weather.Forecast.AI.Integration
             var collection = connection.WeatherForecastCollection();
             await collection.DeleteManyAsync("{}");
         }
-        public async Task InsertDailyForecastCollection(string cityName)
+        public async Task InsertDailyForecastCollection()
         {
-
+            List<string> cities = new List<string> {"ankara", "istanbul", "izmir"};
             var service = new DailyForecastsService();
+
+            // List<Root> dailyForecasts = cities.Select(async i => 
+            //     await service.GetDailyForecastsAsync(i)
+            // );
+            List<Root> dailyForecasts = new();
+            foreach (var city in cities)
+            {
+                dailyForecasts.Add(
+                    await service.GetDailyForecastsAsync(city)
+                );
+            }
+
             var connection = new WeatherForecastMongoDB();
             var collection = connection.WeatherForecastCollection();
-            var dailyForecastBSON = service.GetDailyForecastsAsync(cityName).Result;
-            await collection.InsertManyAsync(dailyForecastBSON);
+            
+            await collection.InsertManyAsync(dailyForecasts);
         }
     }
 }

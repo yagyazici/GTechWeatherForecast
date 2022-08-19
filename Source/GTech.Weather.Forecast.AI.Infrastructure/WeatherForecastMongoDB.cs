@@ -4,11 +4,11 @@ namespace GTech.Weather.Forecast.AI.Infrastructure
 {
     public class WeatherForecastMongoDB
     {
-        public IMongoCollection<DailyForecast> WeatherForecastCollection()
+        public IMongoCollection<Root> WeatherForecastCollection()
         {
-            MongoClient client = new ("mongodb://localhost:27017/?serverSelectionTimeoutMS=5000&connectTimeoutMS=10000&3t.uriVersion=3&3t.connection.name=WeatherForecastMongoDB&3t.alwaysShowAuthDB=true&3t.alwaysShowDBFromUserRole=true");
+            MongoClient client = new("mongodb://localhost:27017/?serverSelectionTimeoutMS=5000&connectTimeoutMS=10000&3t.uriVersion=3&3t.connection.name=WeatherForecastMongoDB&3t.alwaysShowAuthDB=true&3t.alwaysShowDBFromUserRole=true");
             var database = client.GetDatabase("WeatherForecastDB");
-            var collection = database.GetCollection<DailyForecast>("DailyForecast");
+            var collection = database.GetCollection<Root>("DailyForecast");
             return collection;
         }
     }
