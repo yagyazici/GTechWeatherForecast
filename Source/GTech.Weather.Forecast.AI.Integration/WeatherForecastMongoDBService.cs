@@ -14,10 +14,7 @@ namespace GTech.Weather.Forecast.AI.Integration
         {
             List<string> cities = new List<string> {"ankara", "istanbul", "izmir"};
             var service = new DailyForecastsService();
-
-            // List<Root> dailyForecasts = cities.Select(async i => 
-            //     await service.GetDailyForecastsAsync(i)
-            // );
+            
             List<Root> dailyForecasts = new();
             foreach (var city in cities)
             {

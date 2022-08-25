@@ -7,9 +7,9 @@ namespace GTech.Weather.Forecast.AI.Integration
         {
             public async Task Execute(IJobExecutionContext context)
             {
-                JobDataMap dataMap = context.JobDetail.JobDataMap;
-                TimeSeriesService service = new TimeSeriesService();
-                await service.GetMLAsync();
+                WeatherForecastMongoDBService mongoService = new();
+                await mongoService.ClearDailyForecastCollection();
+                await mongoService.InsertDailyForecastCollection();
             }
         }
     }

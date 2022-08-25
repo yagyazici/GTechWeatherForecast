@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GTech.Weather.Forecast.AI.Integration;
 using GTech.Weather.Forecast.AI.Domain.MLNET;
+using GTech.Weather.Forecast.AI.ApiService.RabbitMQ;
 
 namespace GTech.Weather.Forecast.AI.ApiService.Controllers
 {
@@ -9,21 +10,26 @@ namespace GTech.Weather.Forecast.AI.ApiService.Controllers
     public class DailyPredictionController : Controller
     {
         private readonly ILogger<DailyPredictionController> _logger;
-        public DailyPredictionController(ILogger<DailyPredictionController> logger)
+        private readonly IRabbitMqService _rabbitMqService;
+        public static Dictionary<string, List<PredictedDailyTemperature>> predictDB = new();
+
+        public DailyPredictionController(ILogger<DailyPredictionController> logger, IRabbitMqService rabbitMqService)
         {
+            _rabbitMqService = rabbitMqService;
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetDailyPrediction")]
-        public async Task<List<PredictedDailyTemperature>> Get()
+        [HttpGet("{connectionID}")]
+        public async Task<List<PredictedDailyTemperature>> Get(string connectionID)
         {
-            WeatherForecastMongoDBService mongoService = new();
-            await mongoService.ClearDailyForecastCollection();
-            await mongoService.InsertDailyForecastCollection();
+            TimeSeriesService service = new();
 
-            TimeSeriesService service = new TimeSeriesService();
+            var result = await service.GetMLAsync();
+            predictDB.Add(connectionID, result);
 
-            return await service.GetMLAsync();
+            _rabbitMqService.SendNameToQueue(result);
+
+            return result;
         }
     }
 }
